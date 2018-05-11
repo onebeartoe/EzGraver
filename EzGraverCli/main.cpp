@@ -69,6 +69,8 @@ void processCommand(QCoreApplication& app, char const& command, QList<QString> c
     try {
         auto engraver = Ez::create(arguments[0]);
 
+	int burnTime = 60;
+
         switch(command) {
         case 'h':
             engraver->home();
@@ -77,7 +79,11 @@ void processCommand(QCoreApplication& app, char const& command, QList<QString> c
             engraver->center();
             break;
         case 's':
-            engraver->start(60);
+	    if( arguments.count() > 1 )
+	    {
+		burnTime = arguments[1].toInt();
+	    }
+            engraver->start(burnTime);
             break;
         case 'r':
             engraver->reset();
